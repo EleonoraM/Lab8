@@ -14,6 +14,10 @@ public class FermataM {
 	
 	
 	
+	@Override
+	public String toString() {
+		return nome;
+	}
 	public FermataM(int id_fermata, String nome, double cordX, double cordY) {
 		this.id_fermata = id_fermata;
 		this.nome = nome;
