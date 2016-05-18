@@ -31,11 +31,17 @@ public class MetroModel {
 	}
 	
 	public void generaGrafo (){
+		connessioni = metroDAO.getConnessione();
 		fermate = metroDAO.getFermate();
 		grafo = new SimpleWeightedGraph<FermataM, DefaultWeightedEdge>( DefaultWeightedEdge.class);
 		
 		Graphs.addAllVertices(grafo, fermate);
-		
-		
+
+
+		for ( FermataM f : fermate){
+		double velocita= f
+		double distanza 
+		double tempo
+		}
 	}
 }

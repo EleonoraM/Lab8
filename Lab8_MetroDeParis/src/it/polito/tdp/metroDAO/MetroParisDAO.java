@@ -47,16 +47,27 @@ public class MetroParisDAO {
 		throw new RuntimeException("Errore DB");
 	}
 	
-}public List<ConnessioneM> getConnessione(){
-	final String sql= "SELECT id_connessione, id_linea, id_stazP, id_stazA FROMconnessione ORDER BY nome ASC";
+}public List<ConnessioneM> getConnessione(List<FermataM> fermate, List<LineaM> linee){
+	final String sql= "SELECT id_connessione, id_linea, id_stazP, id_stazA FROM connessione";
 	List <ConnessioneM> connessioni = new LinkedList <ConnessioneM>();
 	try {
 	Connection conn = DBConnect.getConnection();
 	PreparedStatement st= conn.prepareStatement(sql);
 	ResultSet rs = st.executeQuery();
 	while(rs.next()){
-		ConnessioneM p = new ConnessioneM (rs.getInt("id_connessione"),rs.getInt("id_linea"),rs.getInt("id_stazP"),rs.getInt("id_stazA") );
-        connessioni.add( p);
+
+		int idLinea = rs.getInt("id_linea");
+		int idStazP = rs.getInt("id_stazP");
+		int idStazA = rs.getInt("id_stazA");
+
+		LineaM myLinea = linee.get(linee.indexOf(new LineaM(idLinea)));
+		FermataM myStazP = fermate.get(fermate.indexOf(new FermataM(idStazP)));
+		FermataM myStazA = fermate.get(fermate.indexOf(new FermataM(idStazA)));
+
+		ConnessioneM cnx = new ConnessioneM(rs.getInt("id_connessione"), myLinea, myStazP, myStazA);
+
+		connessioni.add(cnx);
+
 	}
 	return connessioni;
 } catch (SQLException e){
